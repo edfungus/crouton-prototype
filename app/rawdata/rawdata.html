@@ -1,0 +1,8 @@
+<div class="panel panel-default" ng-controller="RawDataDisplay">
+  <div class="panel-heading">
+    <h3 class="panel-title">Raw Messages</h3>
+  </div>
+  <div class="panel-body">
+    <div ng-class="{'messageIN': dataLine.direction == 'in', 'messageOUT': dataLine.direction == 'out',}" ng-repeat="dataLine in rawData | reverse"><b>{{dataLine.direction == "in" ? ">> " : "<< "}}{{dataLine.topic}}</b>: {{dataLine.message}}</div>
+  </div>
+</div>

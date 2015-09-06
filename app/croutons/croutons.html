@@ -1,0 +1,10 @@
+<div class="panel panel-default" ng-controller='CroutonController'>
+  <div class="panel-heading">
+    <h3 class="panel-title">Croutons</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
+      <a class="list-group-item" crouton={{croutonName}} ng-repeat="(croutonName, crouton) in croutons" ng-click="testConnection(croutonName)" ng-class="{'list-group-item-success': crouton.connectionStatus == 'connected', 'list-group-item-danger': crouton.connectionStatus == 'no connection', 'disabled': !isConnected}"><b>{{crouton.name}}</b> - {{crouton.connectionStatus}}</a>
+    </ul>
+  </div>
+</div>

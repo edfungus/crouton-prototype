@@ -1,0 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700,200);
+html,
+body {
+  height: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+#main_jumbo {
+  margin-top: 40px;
+}
+.margin20top {
+  margin-top: 20px;
+}
+[class^="col-"],[class*=" col-"] {
+   padding-right: 10px;
+   padding-left: 10px;
+}
+a[ng-click]{
+    cursor: pointer;
+}
+.disabled{
+  cursor:default !important;
+}
+#RawDataDisplay .panel-body{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.messageIN {
+  color: #3c763d;
+}
+.messageOUT {
+  color: grey;
+}

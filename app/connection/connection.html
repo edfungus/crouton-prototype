@@ -1,0 +1,22 @@
+<div id="connectionPanel" class="panel" ng-form name="connectionForm" ng-class="{'panel-danger': !isConnected, 'panel-success': isConnected}" ng-controller='ConnectionController'>
+  <div class="panel-heading">
+    <h3 class="panel-title">MQTT Salad Connection</h3>
+    <span ng-hide="isConnected">No connection</span>
+    <spam ng-show="isConnected">Connection successful</span>
+  </div>
+  <div class="panel-body">
+    <div class="alert alert-warning" role="alert" ng-show="badParams">Bad parameters</div>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">IP</span>
+      <input name="ip" type="text" class="form-control" placeholder="0.0.0.0" aria-describedby="basic-addon1" ng-model="connectionParam.ip" ng-disabled="isConnected">
+      <span class="input-group-addon" id="basic-addon1">Port</span>
+      <input name="port" type="text" class="form-control" placeholder="0000" aria-describedby="basic-addon1" ng-model="connectionParam.port" ng-disabled="isConnected">
+    </div>
+    <div class="input-group margin20top">
+      <span class="input-group-addon" id="basic-addon1">Session MQTT ID</span>
+      <input type="text" class="form-control" placeholder="crounton name" aria-describedby="basic-addon1" ng-model="connectionParam.id" ng-disabled="isConnected">
+    </div>
+    <button type="button" class="btn btn-default pull-right margin20top" ng-hide="isConnected" ng-click="connectSalad()">{{connecting ? 'Connecting...' : 'Connect'}}</button>
+    <button type="button" class="btn btn-default pull-right margin20top" ng-show="isConnected" ng-click="disconnectSalad()">Disconnect</button>
+  </div>
+</div>

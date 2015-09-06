@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<head>
+  <link href="common/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="common/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link href="common/css/style.css" rel='stylesheet' type="text/css"/>
+  <link rel=“shortcut icon” type="image/gif" href=“common/favicon.gif”>
+</head>
+
+<body ng-app="Crouton">
+
+  <div class="container">
+    <div id='main_jumbo' class='jumbotron'>
+      <h1>We <i class="fa fa-heart-o"></i> salads</h1>
+      <p>This is a UI tool for the ESP8266 utilizing the MQTT protocol. The intentions are to use the ESP8266 as a hardware enabler for everyday items to become 'internet of things' enabled. Extending beyond that, it is possible to use the ESP8266s as a real-time device to device communication system that has the capability of being physically isolated.</p>
+      <p>Each ESP8266 is called a 'crouton' in which they all communicate within a network called a 'salad'. The terms lettuce, tomato and dressing has not yet be taken.</p>
+      <p>Bon Appetit! <br>Edmund Fung</p>
+    </div>
+    <div id='content'>
+      <div class='row'>
+        <div class="col-md-4">
+          <div class="col-md-12">
+            <div ng-include src="'app/connection/connection.html'"></div>
+          </div>
+          <div class="col-md-12">
+            <div ng-include src="'app/croutons/croutons.html'"></div>
+          </div>
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Broadcast Message</h3>
+              </div>
+              <div class="panel-body">
+                send out message
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12">
+            <div ng-include src="'app/croutondata/croutondata.html'"></div>
+          </div>
+          <div class="col-md-12">
+            <div ng-include src="'app/subscriptions/subscriptions.html'"></div>
+          </div>
+          <div class="col-md-12">
+            <div ng-include src="'app/rawdata/rawdata.html'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script src="common/bower/angular/angular.min.js"></script>
+<script src="common/browserMqtt.js"></script>
+<script src="app/app.js"></script>
+<script src="app/connection/connection.js"></script>
+<script src="app/croutons/croutons.js"></script>
+<script src="app/subscriptions/subscriptions.js"></script>
+<script src="app/rawdata/rawdata.js"></script>
+<script src="app/croutondata/croutondata.js"></script>
+</body>
+</html>

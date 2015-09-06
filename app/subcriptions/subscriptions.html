@@ -1,0 +1,13 @@
+<div class="panel panel-default" ng-controller="SubDisplay">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subscriptions</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <tr ng-repeat="(address, id) in subs | orderBy:id">
+        <td>{{id}}</td>
+        <td>{{address}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
