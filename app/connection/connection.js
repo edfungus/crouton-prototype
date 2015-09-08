@@ -99,8 +99,8 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
   $scope.isConnected = false;
   $scope.connecting = false;
   $scope.badParams = false;
-  //$scope.connectionParam = {'port': '8000', 'ip': 'broker.mqtt-dashboard.com', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
-  $scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
+  $scope.connectionParam = {'port': '8000', 'ip': 'broker.mqtt-dashboard.com', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
+  //$scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
 
   //Update functions
   $rootScope.$on("connectionIs", function(event,arg){
