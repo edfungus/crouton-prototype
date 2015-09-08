@@ -9,13 +9,14 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
   var checkStatusTimeout = [];
   var parent = this;
 
+  //This is the main function that connects the ui to the mqtt broker
   this.connectSalad = function(host,port,clientName){
     client = mqtt.connect({ port: port, host: host, path: "/mqtt", keepalive: 10000, clientId: clientName, reconnectPeriod: 0});
 
-    //temp subs
+    //Subcriptions for incoming communications direct to us... possibly return device json later...
     subList.addAddress("self","/inbox/"+clientName);
 
-    //change the connection module's ui when connecting
+    //Change the connection module's ui when connecting/disconnecting
     client.on('connect', function() {
       $timeout(function() {
         $rootScope.$broadcast("connectionIs", true);
@@ -27,7 +28,7 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
       },300);
     });
 
-    //all incoming messages go through here... it might get a little messy
+    //All incoming messages go through here... it might get a little messy
     client.on('message', function (topic, message) {
       rawMessages.add("in",topic.toString(),message.toString())
       //http://stackoverflow.com/questions/22994871/setting-a-timeout-handler-on-a-promise-in-angularjs
@@ -55,7 +56,7 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
     });
     return
   };
-  //see is the crouton is online by pinging it a message in its inbox and expecting a device description JSON
+  //See is the crouton is online by pinging it a message in its inbox and expecting a device description JSON
   this.checkCroutonConnection = function(name){
     subList.addAddress(name,"/outbox/"+name+"/deviceInfo");
     parent.publishMessage("/inbox/"+name+"/deviceInfo", "get"); //somehow detect a response back here and set status...you could write the on message function and push for raw data for now
@@ -64,22 +65,30 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
       croutonList.updateDeviceStatus(name,"connectionStatus","no connection");
     }, 300);
   };
+  //Pubilsh a message to MQTT broker
   this.publishMessage = function(topic, message) {
     client.publish(topic, message);
     rawMessages.add("out", topic, message);
   }
+  //Tell MQTT Broker to subscribe us to address
   var subscribeAddress = function(address){
     client.subscribe(address);
   };
+  //Tell MQTT Broker to unsubscribe us to address
   var unsubscribeAddress = function(address){
     client.unsubscribe(address);
   };
+  //Close MQTT Broker connection
   this.disconnectSalad = function(){
     client.end();
   };
+
+
+  //A request to subscribe to a topic
   $rootScope.$on("subscribeAddress", function(event, arg){
     subscribeAddress(arg[0]);
   });
+  //A request to unsubscribe to a topic
   $rootScope.$on("unsubscribeAddress", function(event, arg){
     unsubscribeAddress(arg[0]);
   });
@@ -99,7 +108,7 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
     $scope.connecting = false;
   });
 
-  //Functions
+  //Function linked to connect button on UI
   $scope.connectSalad = function() {
     if($scope.connectionParam.ip == '' || $scope.connectionParam.port == '' || $scope.connectionParam.clientName == ''){
       $scope.badParams = true;
@@ -109,6 +118,7 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
     mqttClient.connectSalad($scope.connectionParam.ip,$scope.connectionParam.port,$scope.connectionParam.clientName);
   }
 
+  //Function linked to disconnect button on UI
   $scope.disconnectSalad = function() {
     mqttClient.disconnectSalad();
     $rootScope.$broadcast("connectionIs", false);

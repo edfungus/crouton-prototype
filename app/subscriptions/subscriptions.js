@@ -67,11 +67,8 @@ app.service('subList',function($rootScope){
     return addresses;
   }
 
+  //If there an disconnect from MQTT, unsubscribe from everything
   $rootScope.$on("connectionIs", function(event,arg){!arg && parent.removeAll();});
-  $rootScope.$on("addOnlineDevice", function(event,arg){
-    var address = JSONtoAddresses(arg[1]);
-    //addCrouton(arg[0]); <-- do this
-  });
 });
 app.controller("SubDisplay", ['$scope', 'subList', '$rootScope', function($scope,subList,$rootScope){
   //Variables

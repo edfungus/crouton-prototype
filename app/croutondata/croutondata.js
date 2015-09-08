@@ -4,14 +4,17 @@ Crouton Data Display
 app.service("croutonData", function($rootScope,subList){
   var onlineDevices = {};
 
+  //Returns all the online devices
   this.getOnlineDevices = function(){
     return onlineDevices;
   }
+  //Add an online device
   this.addOnlineDevice = function(name,json){
     onlineDevices[name] = json;
     subList.addCrouton(name,json);
     $rootScope.$broadcast("updateOnlineDevices");
   }
+  //Remove an online device
   this.removeOnlineDevice = function(name){
     delete onlineDevices[name];
     $rootScope.$broadcast("updateOnlineDevices");

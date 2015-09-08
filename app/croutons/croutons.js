@@ -1,8 +1,9 @@
 /*
 Crouton Display
 */
-//stores all croutons in session
-//predefined list of croutons... in the future you can pull from server or on the fly add one
+//Stores all croutons in session
+//Predefined list of croutons... in the future you can pull from server or on the fly add one
+//This only shows the crouton and connection NOT any details about the crouton itself
 app.service('croutonList', function($timeout,$rootScope,croutonData){
   var parent = this;
   var devicesStatus = {
@@ -20,9 +21,11 @@ app.service('croutonList', function($timeout,$rootScope,croutonData){
     },
   };
 
+  //Return device connection
   this.getDeviceStatusList = function(){
     return devicesStatus;
   }
+  //Updates the connection of a crouton
   this.updateDeviceStatus = function(device,connectionStatus,value,deviceInfoJSON){
     devicesStatus[device].connectionStatus = value;
     if(value === "connected"){
@@ -35,6 +38,7 @@ app.service('croutonList', function($timeout,$rootScope,croutonData){
       $rootScope.$broadcast("updateCroutons");
     }, 50);
   }
+  //Makes all crouton connections "unknown connection"
   this.disconnectAll = function(){  //right now this is visual, but later we should be unconnecting via the mqtt service which that disconection here
     for (var key in devicesStatus){
       if (devicesStatus.hasOwnProperty(key)) {
@@ -45,6 +49,7 @@ app.service('croutonList', function($timeout,$rootScope,croutonData){
     $rootScope.$broadcast("updateCroutons");
   }
 
+  //If there an disconnect from MQTT, change all connection to "unknown connection"
   $rootScope.$on("connectionIs", function(event,arg){!arg && parent.disconnectAll();});
 });
 //Block for showing croutons and their connection status
@@ -60,7 +65,7 @@ app.controller("CroutonController", ['$scope', 'croutonList', 'mqttClient', '$ti
   $rootScope.$on("connectionIs", function(event,arg){$scope.isConnected = arg;});
 
 
-  //Functions
+  //Function linked to connect crouton button on UI
   $scope.testConnection = function(id){
     if($scope.isConnected === true){
       mqttClient.checkCroutonConnection(id);
