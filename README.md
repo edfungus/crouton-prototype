@@ -16,7 +16,7 @@ This is an interface that makes it easy to interact with your IOT ESP8266. You c
 
 2. Next, connect your crouton to the same MQTT network.
 
-3. To connect your crouton to the ui, your crouton should be listening to the topic `/inbox/device_name/deviceInfo` expecting a payload of `get`. Upon receiving this message, send back a message to `/outbox/device_name/deviceInfo` with your crouton's deviceInfo JSON in the payload. The UI should now populate with the appropriate display and control elements.  and send over a correct deviceInfo JSON.
+3. To connect your crouton to Crouton UI, your crouton should be listening to the topic `/inbox/device_name/deviceInfo` expecting a payload of `get`. Upon receiving this message, send back a message to `/outbox/device_name/deviceInfo` with your crouton's deviceInfo JSON in the payload. Crouton UI should now populate with the appropriate display and control elements.  and send over a correct deviceInfo JSON.
 4. You are ready go to!
 
 *The default MQTT broker server is the public one from [HiveMQ](http://www.hivemq.com/showcase/public-mqtt-broker/) but you are free to run your own as long as it supports websockets.
@@ -66,9 +66,9 @@ Crouton UI understands how to display each crouton by requesting a description v
 }
 ```
 
-`*name` is the name of the crouton and also the name used in an address
+`*name` is the name of the crouton and also the name used in the address
 
-`*description` is the description of the crouton shown in the ui
+`*description` is the description of the crouton shown in Crouton UI
 
 `*status` represents how the crouton is doing. The only options are `good` or `bad`
 
@@ -84,14 +84,23 @@ Crouton UI understands how to display each crouton by requesting a description v
 + `*address` represents the last element of the topic address to reach this spice. While it is ideal to keep the address and name of the spice the same, it doesn't have to be.
 		+ For example, where `"address": "light"`, the input to this spice will be at `/inbox/crouton_name/light` and output of this spice can be reached  `/outbox/crouton_name/light`
 + `units` is an optional field for visual aid when the value is displayed and is a string
-+ `description` is an optional field to describe your spice in the ui
++ `description` is an optional field to describe your spice in Crouton UI
 + `min` and `max` are both optional fields for integer value validation on the frontend. They can also be used as indicators for reporting spices.
 
 
 
 
 #### Method used to establish connection
-In order for Crouton UI to establish a connection with the Crouton, an exchange is made between them. The ui will send a message `get` to the topic `/inbox/device_name/deviceInfo` . Upon receiving this message, the crouton should reply by sending a deviceInfo JSON to `/outbox/device_name/deviceInfo`. Once the ui receives the JSON, the ui will consider the crouton to be online and will configure the ui based on the deviceInfo JSON.
+In order for Crouton UI to establish a connection with the Crouton, an exchange is made between them. Crouton UI will send a message `get` to the topic `/inbox/device_name/deviceInfo` . Upon receiving this message, the crouton should reply by sending a deviceInfo JSON to `/outbox/device_name/deviceInfo`. Once Crouton UI receives the JSON, Crouton UI will consider the crouton to be online and will configure Crouton UI based on the deviceInfo JSON.
+
+#### LWT and auto-reconnect
+Each crouton is assumed to do two things for auto-reconnecting to work:
+
++ Crouton must broadcast it's deviceInfo upon every connection
++  Crouton must have made a lwt at the address `/outbox/device_name/lwt` with any message with the MQTT broker.
+
+Upon an ungraceful disconnection by a crouton, the Crouton UI will listen for your crouton's deviceInfo. Once your crouton reconnects and publishes it's device info, it will automactically reconnect.
+
 
 ##UI elements
 

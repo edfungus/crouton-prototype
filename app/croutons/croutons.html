@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <ul class="list-group">
-      <a class="list-group-item" crouton={{croutonName}} ng-repeat="(croutonName, crouton) in croutons" ng-click="testConnection(croutonName)" ng-class="{'list-group-item-success': crouton.connectionStatus == 'connected', 'list-group-item-danger': crouton.connectionStatus == 'no connection', 'disabled': !isConnected}"><b>{{crouton.name}}</b> - {{crouton.connectionStatus}}</a>
+      <a class="list-group-item" crouton={{croutonName}} ng-repeat="(croutonName, crouton) in croutons" ng-click="testConnection(croutonName)" ng-class="{'list-group-item-success': crouton.connectionStatus == 'connected', 'list-group-item-danger': crouton.connectionStatus == 'no connection', 'disabled': !isConnected, 'list-group-item-warning': crouton.connectionStatus == 'disconnected'}"><b>{{croutonName}}</b> - {{crouton.connectionStatus}}</a>
     </ul>
   </div>
 </div>
