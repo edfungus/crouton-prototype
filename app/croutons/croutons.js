@@ -1,9 +1,8 @@
 /*
 Crouton Display
 */
-//Stores all croutons in session
+//This only manages the crouton and connection NOT any details about the crouton itself
 //Predefined list of croutons... in the future you can pull from server or on the fly add one
-//This only shows the crouton and connection NOT any details about the crouton itself
 app.service('croutonList', function($timeout,$rootScope,croutonData){
   var parent = this;
   var devicesStatus = {
@@ -50,7 +49,7 @@ app.service('croutonList', function($timeout,$rootScope,croutonData){
   }
 
   //If there an disconnect from MQTT, change all connection to "unknown connection"
-  $rootScope.$on("connectionIs", function(event,arg){!arg && parent.disconnectAll();});
+  $rootScope.$on("connectionIs", function(event,connectionOnline){!connectionOnline && parent.disconnectAll();});
 });
 //Block for showing croutons and their connection status
 app.controller("CroutonController", ['$scope', 'croutonList', 'mqttClient', '$timeout', '$rootScope', function($scope,croutonList,mqttClient,$timeout,$rootScope){
@@ -59,10 +58,10 @@ app.controller("CroutonController", ['$scope', 'croutonList', 'mqttClient', '$ti
   $scope.croutons = croutonList.getDeviceStatusList();
 
   //Update functions
-  $rootScope.$on("updateCroutons", function(event,arg){
+  $rootScope.$on("updateCroutons", function(){
     $scope.croutons = croutonList.getDeviceStatusList();
   });
-  $rootScope.$on("connectionIs", function(event,arg){$scope.isConnected = arg;});
+  $rootScope.$on("connectionIs", function(event,connectionStatus){$scope.isConnected = connectionStatus;});
 
 
   //Function linked to connect crouton button on UI

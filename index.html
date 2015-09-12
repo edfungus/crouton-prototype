@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <head>
-  <link href="common/bower/bootstrap-css-only/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <!---<link href="common/bower/bootstrap-css-only/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>--->
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="common/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
   <link href="common/css/style.css" rel='stylesheet' type="text/css"/>
   <link rel=“shortcut icon” type="image/gif" href=“common/favicon.gif”>
@@ -12,9 +13,10 @@
   <div class="container">
     <div id='main_jumbo' class='jumbotron'>
       <h1>We <i class="fa fa-heart-o"></i> salads</h1>
-      <p>This is a UI tool for the ESP8266 utilizing the MQTT protocol. The intentions are to use the ESP8266 as a hardware enabler for everyday items to become 'internet of things' enabled. Extending beyond that, it is possible to use the ESP8266s as a real-time device to device communication system that has the capability of being physically isolated.</p>
+      <p>This is a UI tool for interacting with ESP8266 IOT devices utilizing the MQTT protocol. The intentions are to use the ESP8266 as a hardware enabler for everyday items to become 'internet of things' enabled. Extending beyond that, it is possible to use the ESP8266s as a real-time device to device communication system that has the capability of being physically isolated.</p>
       <p>Each ESP8266 is called a 'crouton' in which they all communicate within a network called a 'salad'. The terms lettuce, tomato and dressing has not yet be taken.</p>
       <p>Bon Appetit! <br>Edmund Fung</p>
+      <p>See Github repository for more info: <a href="https://github.com/edfungus/crouton-ui">github.com/edfungus/crouton-ui</a>
     </div>
     <div id='content'>
       <div class='row'>
@@ -51,14 +53,21 @@
     </div>
   </div>
 
-
+<!---Dependencies -->
 <script src="common/bower/angular/angular.min.js"></script>
+<script src="common/bower/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="common/browserMqtt.js"></script>
+
+<!--controllers and services -->
 <script src="app/app.js"></script>
 <script src="app/connection/connection.js"></script>
 <script src="app/croutons/croutons.js"></script>
 <script src="app/subscriptions/subscriptions.js"></script>
 <script src="app/rawdata/rawdata.js"></script>
 <script src="app/croutondata/croutondata.js"></script>
+
+<!--UI directives -->
+<script src="app/ui-directives/simpleUI.js"></script>
+
 </body>
 </html>

@@ -12,27 +12,26 @@ app.service("croutonData", function($rootScope,subList){
   this.addOnlineDevice = function(name,json){
     onlineDevices[name] = json;
     subList.addCrouton(name,json);
-    $rootScope.$broadcast("updateOnlineDevices");
+    $rootScope.$broadcast("addOnlineDevices",name);
   }
   //Remove an online device
   this.removeOnlineDevice = function(name){
     delete onlineDevices[name];
-    $rootScope.$broadcast("updateOnlineDevices");
+    $rootScope.$broadcast("removeOnlineDevices",name);
   }
 })
 //Block for displaying crouton data
-app.controller("DataDisplay", ['$scope', 'croutonList', '$rootScope', 'croutonData', function($scope,croutonList,$rootScope,croutonData){
+app.controller("DataDisplay", ['$scope', '$rootScope', 'croutonData', function($scope,$rootScope,croutonData){
   //Variables
-  $scope.croutons = croutonList.getDeviceStatusList();
   $scope.onlineDevices = {};
 
-  $scope.tabs = [];
-
   //Update functions
-  $rootScope.$on("updateCroutons", function(event,arg){
-    $scope.croutons = croutonList.getDeviceStatusList();
-  });
-  $rootScope.$on("updateOnlineDevices", function(event,arg){
+  $rootScope.$on("addOnlineDevices", function(event,arg){
     $scope.onlineDevices = croutonData.getOnlineDevices();
+    console.log(arg+" is online");
+  });
+  $rootScope.$on("removeOnlineDevices", function(event,arg){
+    $scope.onlineDevices = croutonData.getOnlineDevices();
+    console.log(arg+" is offline");
   });
 }]);

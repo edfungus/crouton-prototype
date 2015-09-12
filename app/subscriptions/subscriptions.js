@@ -14,7 +14,7 @@ app.service('subList',function($rootScope){
   this.addAddress = function(name,address){
     subs[address] = name;
     console.log("added: " + address);
-    $rootScope.$broadcast("subscribeAddress",[address]);
+    $rootScope.$broadcast("subscribeAddress",address);
   }
   //Adds all the addresses for a crouton json
   this.addCrouton = function(name,json){
@@ -29,7 +29,7 @@ app.service('subList',function($rootScope){
   this.removeAddress = function(address){
     delete subs[address];
     console.log("removed: " + address);
-    $rootScope.$broadcast("unsubscribeAddress",[address]);
+    $rootScope.$broadcast("unsubscribeAddress",address);
   }
   //Removes all addresses related to a crouton
   this.removeCrouton = function(name){
@@ -68,14 +68,14 @@ app.service('subList',function($rootScope){
   }
 
   //If there an disconnect from MQTT, unsubscribe from everything
-  $rootScope.$on("connectionIs", function(event,arg){!arg && parent.removeAll();});
+  $rootScope.$on("connectionIs", function(event,connectionOnline){!connectionOnline && parent.removeAll();});
 });
 app.controller("SubDisplay", ['$scope', 'subList', '$rootScope', function($scope,subList,$rootScope){
   //Variables
   $scope.subs = subList.getSubList();
 
   //Update Functions
-  $rootScope.$on('updateSubs', function(event, arg){
+  $rootScope.$on('updateSubs', function(){
     $scope.subs = subList.getSubList();
   });
 }]);

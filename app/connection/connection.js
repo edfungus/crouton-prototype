@@ -85,12 +85,12 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
 
 
   //A request to subscribe to a topic
-  $rootScope.$on("subscribeAddress", function(event, arg){
-    subscribeAddress(arg[0]);
+  $rootScope.$on("subscribeAddress", function(event, address){
+    subscribeAddress(address);
   });
   //A request to unsubscribe to a topic
-  $rootScope.$on("unsubscribeAddress", function(event, arg){
-    unsubscribeAddress(arg[0]);
+  $rootScope.$on("unsubscribeAddress", function(event, address){
+    unsubscribeAddress(address);
   });
 });
 //Block for mqtt connection
@@ -103,8 +103,8 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
   //$scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
 
   //Update functions
-  $rootScope.$on("connectionIs", function(event,arg){
-    $scope.isConnected = arg;
+  $rootScope.$on("connectionIs", function(event,connectionStatus){
+    $scope.isConnected = connectionStatus;
     $scope.connecting = false;
   });
 

@@ -1,4 +1,4 @@
-var app = angular.module('Crouton', []); //defining our angular app
+var app = angular.module('Crouton', ['ui.bootstrap']); //defining our angular app
 
 //service returns its own instance
 //factory returns a unique instance

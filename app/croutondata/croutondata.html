@@ -3,10 +3,10 @@
     <h3 class="panel-title">Crouton Dashboard</h3>
   </div>
   <div class="panel-body">
-    <!---<ul class="nav nav-tabs">
-      <li role="presentation"><a href="#">EPS1</a></li>
-      <li role="presentation" class="active"><a href="#">Computer1</a></li>
-      <li role="presentation"><a href="#">Computer2</a></li>
-    </ul>--->
+    <tabset>
+      <tab ng-repeat="(name,json) in onlineDevices" heading="{{name}}" active="tab.active" disable="tab.disabled">
+        <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints']" crouton="name" spice="spiceName" json="spiceJson"></crouton-data-display-loader>
+      </tab>
+    </tabset>
   </div>
 </div>
