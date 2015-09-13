@@ -5,7 +5,7 @@
   <div class="panel-body">
     <tabset>
       <tab ng-repeat="(name,json) in onlineDevices" heading="{{name}}" active="tab.active" disable="tab.disabled">
-        <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints']" crouton="name" spice="spiceName" json="spiceJson"></crouton-data-display-loader>
+        <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints']" crouton="name" spice="json['spices'][spiceName]" json="spiceJson"></crouton-data-display-loader>
       </tab>
     </tabset>
   </div>

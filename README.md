@@ -55,12 +55,12 @@ Crouton UI understands how to display each crouton by requesting a description v
             "spice_name": {
                 "type": String,
                 "value": Array or String,
-                "address": String,
+                "ui-type": String,
+                "title": String,
                 "units": String,
                 "description": String,
                 "min": Integer,
-                "max": Integer,
-                "ui-type": String
+                "max": Integer
             }
         },       
     }
@@ -75,17 +75,18 @@ Crouton UI understands how to display each crouton by requesting a description v
 
 `*endPoints` represents all the spices or features the crouton has available.  Each spice is represented as an object in in `endPoints`. Each parameters are as follows:
 
++ `*spice_name` represents the name but also the address (last element of the topic address) to reach this spice.
+		+ For example, where `"light": {....}`, the input to this spice will be at `/inbox/crouton_name/light` and output of this spice can be reached  `/outbox/crouton_name/light`
 + `*type` represents what kind of spice it is. There are currently two types to choose from
 	+ `report` is for spices that only send data out to the client. Ie. temperature probe
 	+ `control` is for spices that communicates back and forth with the client. Ie. lighting control
-+ `*value` represents the type of data that will be sent. Basic types can be string but custom values must be in an array
++ `(*if control) value` represents the type of data that will be sent. Basic types can be string but custom values must be in an array
 	+ `String` for values that will be sent as string
 	+ `Number` for values that will be sent as integers or floats
 	+ `array[]` for custom values. Ie. If a light switch only has on or off, then the declaration will be an array with the values `on` and `off` like `"value": ["on", "off"]`
-+ `*address` represents the last element of the topic address to reach this spice. While it is ideal to keep the address and name of the spice the same, it doesn't have to be.
-		+ For example, where `"address": "light"`, the input to this spice will be at `/inbox/crouton_name/light` and output of this spice can be reached  `/outbox/crouton_name/light`
 + `*ui-type` indicates the type of ui used to display data and controls. This can be customized by adding custom directives. The current options are:
     + `simple-text` for `report` type only and just display value from crouton
++ `title`represents the title of the spice
 + `units` is an optional field for visual aid when the value is displayed and is a string
 + `description` is an optional field to describe your spice in Crouton UI
 + `min` and `max` are both optional fields for integer value validation on the frontend. They can also be used as indicators for reporting spices.

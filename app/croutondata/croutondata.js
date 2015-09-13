@@ -12,12 +12,23 @@ app.service("croutonData", function($rootScope,subList){
   this.addOnlineDevice = function(name,json){
     onlineDevices[name] = json;
     subList.addCrouton(name,json);
+    configureOnlineDevices(name);
     $rootScope.$broadcast("addOnlineDevices",name);
   }
   //Remove an online device
   this.removeOnlineDevice = function(name){
     delete onlineDevices[name];
     $rootScope.$broadcast("removeOnlineDevices",name);
+  }
+
+  var configureOnlineDevices = function(name){
+    //configure locations to keep updated values of each endpoint
+    onlineDevices[name]['spices'] = {}
+    for(var spice in onlineDevices[name]['deviceInfo']['endPoints']){
+      onlineDevices[name]['spices'][spice] = {};
+      onlineDevices[name]['spices'][spice]['value'] = '';
+    }
+    console.log(onlineDevices);
   }
 })
 //Block for displaying crouton data
