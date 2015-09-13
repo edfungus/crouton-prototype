@@ -27,6 +27,7 @@ app.service("croutonData", function($rootScope){
   //Updates new value from crouton
   this.updateDeviceValue = function(name,spice,value){
     onlineDevices[name]['spices'][spice]['value'] = value;
+    $rootScope.$broadcast("updateOnlineDevices",name);
   }
   var configureOnlineDevices = function(name){
     //configure locations to keep updated values of each endpoint

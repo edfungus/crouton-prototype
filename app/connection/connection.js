@@ -37,6 +37,7 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
       box = topicSplit[1];
       name = topicSplit[2];
       address = topicSplit[3];
+      message = message.toString();
 
       //Waiting for device info to check if device is online
       if(box === "outbox" && typeof checkStatusTimeout.name != "undefined" && address === "deviceInfo"){
@@ -47,6 +48,7 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
         subList.removeAddress("/outbox/"+name+"/deviceInfo"); //unsub from outbox
         subList.addCrouton(name,messageObj);
         croutonData.addOnlineDevice(name,messageObj);
+        return;
       }
 
       //lwt - device has disconnected
@@ -56,9 +58,16 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
         subList.removeCrouton(name);
         subList.addAddress(name,"/outbox/"+name+"/deviceInfo");
         croutonData.removeOnlineDevice(name);
+        return;
+      }
+
+      //If it is just a normal value update from a crouton...
+      //might need some sanitation here or something
+      if(box === "outbox"){
+        croutonData.updateDeviceValue(name,address,message);
       }
     });
-    return
+    return;
   };
   //See is the crouton is online by pinging it a message in its inbox and expecting a device description JSON
   this.checkCroutonConnection = function(name){
@@ -108,8 +117,8 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
   $scope.isConnected = false;
   $scope.connecting = false;
   $scope.badParams = false;
-  $scope.connectionParam = {'port': '8000', 'ip': 'broker.mqtt-dashboard.com', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
-  //$scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
+  //$scope.connectionParam = {'port': '8000', 'ip': 'broker.mqtt-dashboard.com', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
+  $scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
 
   //Update functions
   $rootScope.$on("connectionIs", function(event,connectionStatus){

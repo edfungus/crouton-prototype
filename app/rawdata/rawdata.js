@@ -30,6 +30,6 @@ app.controller("RawDataDisplay", ['$scope', 'mqttClient', '$rootScope', 'rawMess
 
   //Update functions
   $rootScope.$on('updateRawData', function(event, args) {
-    $scope.rawData = rawMessages.rawDataOutput;
+    $scope.rawData = rawMessages.rawDataOutput;    
   });
 }]);

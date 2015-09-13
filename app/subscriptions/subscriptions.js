@@ -18,11 +18,15 @@ app.service('subList',function($rootScope){
   }
   //Adds all the addresses for a crouton json
   this.addCrouton = function(name,json){
-    var addresses = JSONtoAddresses(json);
+    //defaultly listen to the lwt
     parent.addAddress(name,"/outbox/" + name + "/lwt");
-    for (var i = 0; i < addresses.length; i++) {
-      subs[addresses[i]] = name;
-      parent.addAddress(name,addresses[i]);
+
+    //gets all the endpoints
+    var endPoints = json.deviceInfo.endPoints; //need error handling here
+    for (var key in endPoints){
+      if (endPoints.hasOwnProperty(key)) {
+        parent.addAddress(name,"/outbox/" + name + "/" + key)
+      }
     }
   }
   //Removes one address
@@ -47,24 +51,6 @@ app.service('subList',function($rootScope){
       }
     }
     $rootScope.$broadcast("updateSubs");
-  }
-
-  //generate a list of address to add from crouton json
-  var JSONtoAddresses = function(json){
-    var addresses = [];
-    var endPoints = json.deviceInfo.endPoints; //need error handling here
-    var name = json.deviceInfo.name;
-    for (var key in endPoints){
-      if (endPoints.hasOwnProperty(key)) {
-        //both control and report will have /outbox/
-        addresses.push("/outbox/" + name + "/" + key)
-        //only control will have /inbox/
-        if(endPoints[key].type === "control" ){
-          addresses.push("/inbox/" + name + "/" + key)
-        }
-      }
-    }
-    return addresses;
   }
 
   //If there an disconnect from MQTT, unsubscribe from everything
