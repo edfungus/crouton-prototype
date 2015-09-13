@@ -5,7 +5,7 @@ app.directive('simpleText', function () {
     //temeplate up and sipmle report view with external html file
     //connect another variable so that we dont need to listen here...
     //aka make a croutondata reciever and may add to the onlinedevices object
-    console.log($scope.spice);
+    console.log($scope);
   }];
 
   var template = '/app/ui-modules/simpleText/simpleText.tmpl.html';
@@ -13,9 +13,9 @@ app.directive('simpleText', function () {
   return {
       restrict: 'EA', //Default in 1.3+
       scope: {
-        spiceinfo: '=',
+        spiceInfo: '=',
         crouton: '=',
-        spice: '='
+        spiceValues: '='
       },
       controller: controller,
       templateUrl: template

@@ -3,7 +3,7 @@ app.directive('croutonDataDisplayLoader', function($compile){
     restrict: 'E',
     link: function(scope, elem, attrs){
         console.log(scope);
-        var htm = "<"+attrs.uitype+" crouton='crouton' spice='spice' spiceinfo='json'></"+attrs.uitype+">";
+        var htm = "<"+attrs.uitype+" crouton='crouton' spice-value='spice' spice-info='json'></"+attrs.uitype+">";
         var compiled = $compile(htm)(scope);
         elem.append(compiled);
     },

@@ -2,7 +2,7 @@
 Connection Display
 */
 //service for mqtt processes including the client, sub, unsub, publish, receive, disconnect
-app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMessages){
+app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMessages,croutonData){
   var client;
   var connectEvent;
   var closeEvent;
@@ -24,6 +24,7 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
     });
     client.on('close', function() {
       $timeout(function() {
+        clearUI();
         $rootScope.$broadcast("connectionIs", false);
       },300);
     });
@@ -42,8 +43,10 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
         messageObj = JSON.parse(message.toString());
         $timeout.cancel(checkStatusTimeout.name); //cancel timeout
         checkStatusTimeout.splice(name); //destroy timeout element to say we are done checking
+        croutonList.updateDeviceStatus(name,"connectionStatus","connected");
         subList.removeAddress("/outbox/"+name+"/deviceInfo"); //unsub from outbox
-        croutonList.updateDeviceStatus(name,"connectionStatus","connected",messageObj);
+        subList.addCrouton(name,messageObj);
+        croutonData.addOnlineDevice(name,messageObj);
       }
 
       //lwt - device has disconnected
@@ -52,6 +55,7 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
         croutonList.updateDeviceStatus(name,"connectionStatus","disconnected");
         subList.removeCrouton(name);
         subList.addAddress(name,"/outbox/"+name+"/deviceInfo");
+        croutonData.removeOnlineDevice(name);
       }
     });
     return
@@ -80,8 +84,13 @@ app.service("mqttClient", function($timeout,subList,croutonList,$rootScope,rawMe
   };
   //Close MQTT Broker connection
   this.disconnectSalad = function(){
+    clearUI();
     client.end();
   };
+  var clearUI = function() {
+    croutonList.disconnectAll();
+    croutonData.removeAllOnlineDevice();
+  }
 
 
   //A request to subscribe to a topic

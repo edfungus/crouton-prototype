@@ -57,10 +57,10 @@ app.service('subList',function($rootScope){
     for (var key in endPoints){
       if (endPoints.hasOwnProperty(key)) {
         //both control and report will have /outbox/
-        addresses.push("/outbox/" + name + "/" + endPoints[key].address)
+        addresses.push("/outbox/" + name + "/" + key)
         //only control will have /inbox/
         if(endPoints[key].type === "control" ){
-          addresses.push("/inbox/" + name + "/" + endPoints[key].address)
+          addresses.push("/inbox/" + name + "/" + key)
         }
       }
     }
