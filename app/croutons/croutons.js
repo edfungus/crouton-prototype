@@ -26,9 +26,8 @@ app.service('croutonList', function($timeout,$rootScope){
   }
   //Updates the connection of a crouton
   this.updateDeviceStatus = function(device,connectionStatus,value){
-    devicesStatus[device].connectionStatus = value;
     $timeout(function() { //this ensures the value has changed first before adjust the scope state
-      $rootScope.$broadcast("updateCroutons");
+      devicesStatus[device].connectionStatus = value;
     }, 50);
   }
   //Makes all crouton connections "unknown connection"
@@ -38,26 +37,18 @@ app.service('croutonList', function($timeout,$rootScope){
         devicesStatus[key].connectionStatus = "unknown connection";
       }
     }
-    $rootScope.$broadcast("updateCroutons");
   }
 
 });
 //Block for showing croutons and their connection status
 app.controller("CroutonController", ['$scope', 'croutonList', 'mqttClient', '$timeout', '$rootScope', function($scope,croutonList,mqttClient,$timeout,$rootScope){
   //Variables
-  $scope.isConnected = false;
+  $scope.connection = mqttClient.getConnection();
   $scope.croutons = croutonList.getDeviceStatusList();
-
-  //Update functions
-  $rootScope.$on("updateCroutons", function(){
-    $scope.croutons = croutonList.getDeviceStatusList();
-  });
-  $rootScope.$on("connectionIs", function(event,connectionStatus){$scope.isConnected = connectionStatus;});
-
 
   //Function linked to connect crouton button on UI
   $scope.testConnection = function(id){
-    if($scope.isConnected === true){
+    if($scope.connection.isConnected === true){
       mqttClient.checkCroutonConnection(id);
     }
   }

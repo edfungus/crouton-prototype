@@ -50,7 +50,6 @@ app.service('subList',function($rootScope){
         parent.removeAddress(key);
       }
     }
-    $rootScope.$broadcast("updateSubs");
   }
 
   //If there an disconnect from MQTT, unsubscribe from everything
@@ -59,9 +58,4 @@ app.service('subList',function($rootScope){
 app.controller("SubDisplay", ['$scope', 'subList', '$rootScope', function($scope,subList,$rootScope){
   //Variables
   $scope.subs = subList.getSubList();
-
-  //Update Functions
-  $rootScope.$on('updateSubs', function(){
-    $scope.subs = subList.getSubList();
-  });
 }]);

@@ -44,10 +44,11 @@ a[ng-click]{
 .well {
   word-wrap: break-word;
 }
-simple-text div {
+.simple-text {
   background-color: aliceblue;
   text-align: center;
+  padding-top: 0px;
 }
-simple-text div h6, simple-text div p {
+.simple-text h6, .simple-text p {
   color: grey;
 }
