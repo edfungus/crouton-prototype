@@ -5,6 +5,14 @@
   <div class="panel-body">
     <tabset>
       <tab ng-repeat="(name,json) in onlineDevices" heading="{{name}}" active="tab.active" disable="tab.disabled">
+        <div class="row">
+          <div class="col-md-6">
+            <div class='well'>Description: <b>{{json['deviceInfo']['description']}}</b></div>
+          </div>
+          <div class="col-md-6">
+            <div class='well'>Status: <b>{{json['deviceInfo']['status']}}</b></div>
+          </div>
+        </div>
         <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints']" crouton="name" spice="json['spices'][spiceName]" json="spiceJson"></crouton-data-display-loader>
       </tab>
     </tabset>

@@ -12,7 +12,7 @@ app.service('croutonList', function($timeout,$rootScope){
     "crouton-esp2": {
       "connectionStatus": "unknown connection"
     },
-    "crouton-computer1": {
+    "crouton computer1": {
       "connectionStatus": "unknown connection"
     },
     "crouton-computer2": {
