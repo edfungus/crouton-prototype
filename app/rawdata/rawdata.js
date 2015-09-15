@@ -29,4 +29,5 @@ app.service('rawMessages', function($rootScope){
 app.controller("RawDataDisplay", ['$scope', 'mqttClient', '$rootScope', 'rawMessages', function($scope,mqttClient,$rootScope,rawMessages){
   //Variables
   $scope.rawData = rawMessages.getData();
+  $scope.panelOpen = true;
 }]);

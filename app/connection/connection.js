@@ -77,10 +77,11 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
   this.checkCroutonConnection = function(name){
     subList.addAddress(name,"/outbox/"+name+"/deviceInfo");
     parent.publishMessage("/inbox/"+name+"/deviceInfo", "get"); //somehow detect a response back here and set status...you could write the on message function and push for raw data for now
+    croutonList.updateDeviceStatus(name,'connectionStatus','connecting...')
     checkStatusTimeout.name = $timeout(function() {
       subList.removeAddress("/outbox/"+name+"/deviceInfo"); //unsub from outbox
-      croutonList.updateDeviceStatus(name,"connectionStatus","no connection");
-    }, 300);
+      croutonList.updateDeviceStatus(name,"connectionStatus","no response");
+    }, 5000);
   };
   //Pubilsh a message to MQTT broker
   this.publishMessage = function(topic, message) {
@@ -119,6 +120,13 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
   //A request to unsubscribe to a topic
   $rootScope.$on("unsubscribeAddress", function(event, address){
     unsubscribeAddress(address);
+  });
+  $rootScope.$on("removeCrouton", function(event, message){
+    if (message["from"] !== "croutonList"){ //we deleted the entry already
+      croutonList.updateDeviceStatus(message["name"],"connectionStatus","disconnected");
+    }
+    subList.removeCrouton(message["name"]);
+    croutonData.removeOnlineDevice(message["name"]);
   });
 });
 //Block for mqtt connection

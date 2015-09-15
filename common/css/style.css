@@ -16,6 +16,16 @@ a[ng-click]{
 .disabled{
   cursor:default !important;
 }
+.linkOverride{
+  color:inherit;
+}
+.linkOverride:hover{
+  color:inherit;
+}
+.alert{
+  padding: 10px;
+  margin: 15px 0px 10px 0px;
+}
 
 /*jumbo*/
 #main_jumbo {
@@ -23,6 +33,18 @@ a[ng-click]{
 }
 .margin20top {
   margin-top: 20px;
+}
+
+/*crouton list*/
+.closeButtonSpacing {
+  padding-right: 8px;
+  float: right;
+  line-height: inherit;
+}
+.addCroutonList{
+  width: 80%;
+  font-size: 13px !important;
+  height: 23px;
 }
 
 /* raw data display */

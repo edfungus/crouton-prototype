@@ -58,4 +58,5 @@ app.service('subList',function($rootScope){
 app.controller("SubDisplay", ['$scope', 'subList', '$rootScope', function($scope,subList,$rootScope){
   //Variables
   $scope.subs = subList.getSubList();
+  $scope.panelOpen = true;
 }]);

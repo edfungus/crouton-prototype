@@ -43,4 +43,5 @@ app.service("croutonData", function($rootScope){
 app.controller("DataDisplay", ['$scope', '$rootScope', 'croutonData', 'mqttClient', function($scope,$rootScope,croutonData,mqttClient){
   //Variables
   $scope.onlineDevices = croutonData.getOnlineDevices();
+  $scope.panelOpen = true;
 }]);

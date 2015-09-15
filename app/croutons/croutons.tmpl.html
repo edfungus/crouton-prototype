@@ -4,8 +4,17 @@
   </div>
   <div class="panel-body">
     <ul class="list-group">
-      *currently croutons are predefined*
-      <a class="list-group-item" crouton={{croutonName}} ng-repeat="(croutonName, crouton) in croutons" ng-click="testConnection(croutonName)" ng-class="{'list-group-item-success': crouton.connectionStatus == 'connected', 'list-group-item-danger': crouton.connectionStatus == 'no connection', 'disabled': !connection.isConnected, 'list-group-item-warning': crouton.connectionStatus == 'disconnected'}"><b>{{croutonName}}</b> - {{crouton.connectionStatus}}</a>
+      <div class="list-group-item" crouton={{croutonName}} ng-repeat="(croutonName, crouton) in croutons" ng-click="testCroutonConnection(croutonName)" ng-class="{'list-group-item-success': crouton.connectionStatus == 'connected', 'list-group-item-danger': crouton.connectionStatus == 'no response', 'disabled': !connection.isConnected, 'list-group-item-warning': crouton.connectionStatus == 'disconnected'}"><i ng-click="removeCroutonConnection(croutonName)" class="fa fa-times closeButtonSpacing"></i><b>{{croutonName}}</b> - {{crouton.connectionStatus}}</div>
+      <div class="list-group-item" ng-class="{'disabled': !connection.isConnected}"><i ng-click="addCroutonConnection()" class="fa fa-plus closeButtonSpacing"></i><input name="ip" type="text" class="form-control addCroutonList" ng-disabled="!connection.isConnected" ng-keyup="$event.keyCode == 13 && addCroutonConnection()" placeholder="Crouton Name" ng-model="newCroutonName">
+        <div class="alert alert-danger" role="alert" ng-show="showEmtpyError">
+          <i ng-click="showEmtpyError = !showEmtpyError" class="fa fa-times closeButtonSpacing"></i>
+          Crouton name cannot be empty
+        </div>
+        <div class="alert alert-danger" role="alert" ng-show="showDuplicateError">
+          <i ng-click="showDuplicateError = !showDuplicateError" class="fa fa-times closeButtonSpacing"></i>
+          Duplicate crouton name
+        </div>
+      </div>
     </ul>
   </div>
 </div>
