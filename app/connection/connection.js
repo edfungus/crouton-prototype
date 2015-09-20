@@ -100,6 +100,7 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
     rawMessages.clear();
     croutonList.disconnectAll();
     croutonData.removeAllOnlineDevice();
+    subList.removeAll();
     connection.isConnected = false;
   }
   //Close MQTT Broker connection
@@ -128,6 +129,10 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
     subList.removeCrouton(message["name"]);
     croutonData.removeOnlineDevice(message["name"]);
   });
+  $rootScope.$on("sendMessage", function(event, message){
+    console.log(message);
+    parent.publishMessage(message["topic"], message["payload"]);
+  });
 });
 //Block for mqtt connection
 app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', 'subList', '$rootScope', function($scope,mqttClient,croutonList,subList,$rootScope){
@@ -143,7 +148,8 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
       $scope.badParams = true;
       return;
     }
-      mqttClient.connectSalad($scope.connectionParam.ip,$scope.connectionParam.port,$scope.connectionParam.clientName);
+    $scope.badParams = false;
+    mqttClient.connectSalad($scope.connectionParam.ip,$scope.connectionParam.port,$scope.connectionParam.clientName);
   }
 
   //Function linked to disconnect button on UI

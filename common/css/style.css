@@ -6,6 +6,9 @@ body {
   height: 100%;
   font-family: 'Source Sans Pro', sans-serif;
 }
+* {
+  border-radius: 0 !important;
+}
 [class^="col-"],[class*=" col-"] {
    padding-right: 10px;
    padding-left: 10px;
@@ -43,8 +46,11 @@ a[ng-click]{
 }
 .addCroutonList{
   width: 80%;
-  font-size: 13px !important;
+  font-size: 15px !important;
   height: 23px;
+  border-width: 0px;
+  padding-left: 0px;
+  font-weight: bold;
 }
 
 /* raw data display */
@@ -72,5 +78,13 @@ a[ng-click]{
   padding-top: 0px;
 }
 .simple-text h6, .simple-text p {
+  color: grey;
+}
+.simple-toggle {
+  background-color: lavender;
+  text-align: center;
+  padding-top: 0px;
+}
+.simple-toggle h6, .simple-toggle p {
   color: grey;
 }

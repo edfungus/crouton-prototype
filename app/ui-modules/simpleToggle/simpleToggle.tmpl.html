@@ -1,0 +1,9 @@
+<div class="col-md-4">
+  <div class="well simple-toggle">
+    <h3>{{spiceValues.value | noValue}}{{spiceInfo.units}}</h3>
+    <div class="btn-group">
+      <label class="btn btn-default" ng-init="button[option] = false" ng-class="{'active':button[option]}" ng-model="g" ng-repeat="option in spiceInfo.values" ng-click="selectToggle(option)" btn-radio>{{option}}</label>
+    </div>
+    <h6 tooltip="{{spiceInfo.description}}" tooltip-placement="bottom">{{spiceInfo.title}}</h6>
+  </div>
+</div>

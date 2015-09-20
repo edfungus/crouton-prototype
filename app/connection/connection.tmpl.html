@@ -5,20 +5,22 @@
     <spam ng-show="connection.isConnected">Connection successful</span>
   </div>
   <div class="panel-body">
-    <div class="alert alert-warning" role="alert" ng-show="badParams">Bad parameters</div>
-    <div class="input-group">
-      <span class="input-group-addon">IP</span>
-      <input name="ip" type="text" class="form-control" placeholder="0.0.0.0" ng-model="connectionParam.ip" ng-disabled="connection.isConnected">
-    </div>
-    <div class="input-group margin20top">
-      <span class="input-group-addon">Port</span>
-      <input name="port" type="text" class="form-control" placeholder="0000" ng-model="connectionParam.port" ng-disabled="connection.isConnected">
-    </div>
-    <div class="input-group margin20top">
-      <span class="input-group-addon">Session MQTT ID</span>
-      <input type="text" class="form-control" placeholder="crounton name" ng-model="connectionParam.clientName" ng-disabled="connection.isConnected">
-    </div>
-    <button type="button" class="btn btn-default pull-right margin20top" ng-hide="connection.isConnected" ng-click="connectSalad()">{{connection.connecting ? 'Connecting...' : 'Connect'}}</button>
-    <button type="button" class="btn btn-default pull-right margin20top" ng-show="connection.isConnected" ng-click="disconnectSalad()">Disconnect</button>
+    <form name="connectCrouton" class="css-form" novalidate>
+      <div class="alert alert-danger" role="alert" ng-show="badParams">Bad parameters</div>
+      <div class="input-group" ng-class="{'has-error':connectCrouton.ip.$error.required}">
+        <span class="input-group-addon">IP</span>
+        <input name="ip" type="text" class="form-control" placeholder="0.0.0.0" ng-model="connectionParam.ip" ng-disabled="connection.isConnected" required>
+      </div>
+      <div class="input-group margin20top" ng-class="{'has-error':connectCrouton.port.$error.required}">
+        <span class="input-group-addon">Port</span>
+        <input name="port" type="text" class="form-control" placeholder="0000" ng-model="connectionParam.port" ng-disabled="connection.isConnected" required>
+      </div>
+      <div class="input-group margin20top" ng-class="{'has-error':connectCrouton.name.$error.required}">
+        <span class="input-group-addon">Session MQTT ID</span>
+        <input name="name" type="text" class="form-control" placeholder="crounton name" ng-model="connectionParam.clientName" ng-disabled="connection.isConnected" required>
+      </div>
+      <button type="button" class="btn btn-default pull-right margin20top" ng-hide="connection.isConnected" ng-click="connectSalad()" ng-disabled="(connectCrouton.ip.$error.required || connectCrouton.port.$error.required || connectCrouton.name.$error.required)">{{connection.connecting ? 'Connecting...' : 'Connect'}}</button>
+      <button type="button" class="btn btn-default pull-right margin20top" ng-show="connection.isConnected" ng-click="disconnectSalad()">Disconnect</button>
+    </form>
   </div>
 </div>

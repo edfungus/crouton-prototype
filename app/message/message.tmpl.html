@@ -1,0 +1,21 @@
+<div ng-controller="sendMessage">
+  <accordion close-others="oneAtATime">
+    <accordion-group is-open="panelOpen">
+      <accordion-heading>
+        <h3 class="panel-title">Broadcast Message {{topic}}</h3>
+      </accordion-heading>
+      <form name="sendMessageForm" class="css-form" novalidate>
+        <div class="alert alert-success" role="alert" ng-show="sent">Sent!</div>
+        <div class="input-group" ng-class="{'has-error-nope':sendMessageForm.topic.$error.required}">
+          <span class="input-group-addon">Topic</span>
+          <input name="topic" type="text" class="form-control" placeholder="/box/crouton_name/spice" ng-model="message.topic" ng-disabled="!connection.isConnected" required>
+        </div>
+        <div class="input-group margin20top" ng-class="{'has-error-nope':sendMessageForm.payload.$error.required}">
+          <span class="input-group-addon">Payload</span>
+          <input name="payload" type="text" class="form-control" placeholder="{}" ng-model="message.payload" ng-disabled="!connection.isConnected" required>
+        </div>
+        <button type="button" class="btn btn-default pull-right margin20top" ng-disabled="(sendMessageForm.payload.$error.required || sendMessageForm.topic.$error.required)" ng-click="sendMessage()">Send</button>
+      </form>
+    </accordion-group>
+  </accordion>
+</div>
