@@ -77,14 +77,21 @@ a[ng-click]{
   text-align: center;
   padding-top: 0px;
 }
-.simple-text h6, .simple-text p {
-  color: grey;
-}
 .simple-toggle {
   background-color: lavender;
   text-align: center;
   padding-top: 0px;
 }
-.simple-toggle h6, .simple-toggle p {
+.simple-button {
+  background-color: papayawhip;
+  text-align: center;
+  padding-top: 0px;
+}
+.simple-graph {
+  background-color: lightpink;
+  text-align: center;
+  padding-top: 0px;
+}
+.simple-text h6, .simple-text p, .simple-toggle h6, .simple-toggle p, .simple-button h6, .simple-button p, .simple-graph h6, .simple-graph p {
   color: grey;
 }

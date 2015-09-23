@@ -39,11 +39,11 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
       box = topicSplit[1];
       name = topicSplit[2];
       address = topicSplit[3];
-      message = message.toString();
+      messageString = message.toString();
 
       //Waiting for device info to check if device is online
       if(box === "outbox" && typeof checkStatusTimeout.name != "undefined" && address === "deviceInfo"){
-        messageObj = JSON.parse(message.toString());
+        messageObj = JSON.parse(messageString);
         $timeout.cancel(checkStatusTimeout.name); //cancel timeout
         checkStatusTimeout.splice(name); //destroy timeout element to say we are done checking
         croutonData.addOnlineDevice(name,messageObj);
@@ -59,7 +59,7 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
         croutonList.updateDeviceStatus(name,"connectionStatus","disconnected");
         subList.removeCrouton(name);
         subList.addAddress(name,"/outbox/"+name+"/deviceInfo");
-        croutonData.removeOnlineDevice(name);
+        //croutonData.removeOnlineDevice(name);
         return;
       }
 
@@ -67,7 +67,8 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
       //might need some sanitation here or something
       if(box === "outbox"){
         $rootScope.$apply(function(){
-          croutonData.updateDeviceValue(name,address,message);
+          messageObj = JSON.parse(messageString);
+          croutonData.updateDeviceValue(name,address,messageObj);
         });
       }
     });
@@ -130,7 +131,6 @@ app.service("mqttClient", function($timeout,$rootScope,subList,croutonList,rawMe
     croutonData.removeOnlineDevice(message["name"]);
   });
   $rootScope.$on("sendMessage", function(event, message){
-    console.log(message);
     parent.publishMessage(message["topic"], message["payload"]);
   });
 });
@@ -140,7 +140,7 @@ app.controller('ConnectionController', ['$scope', 'mqttClient', 'croutonList', '
   $scope.connection = mqttClient.getConnection();
   $scope.badParams = false;
   $scope.connectionParam = {'port': '8000', 'ip': 'broker.mqtt-dashboard.com', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
-  //$scope.connectionParam = {'port': '6789', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
+  //$scope.connectionParam = {'port': '8083', 'ip': 'localhost', 'clientName': "crounton-webclient" + parseInt(Math.random() * 100, 10) };
 
   //Function linked to connect button on UI
   $scope.connectSalad = function() {

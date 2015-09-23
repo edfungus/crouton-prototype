@@ -1,0 +1,7 @@
+<div class="col-md-8">
+  <div class="well simple-graph">
+    <canvas id="crouton-esp1pwm" width="400" height="200"></canvas>
+    <h5 ng-repeat="value in spiceValues">{{value | noValue}}{{spiceInfo.units}}</h5>
+    <h6 tooltip="{{spiceInfo.description}}" ng-click="test()" tooltip-placement="bottom">{{spiceInfo.title}}</h6>
+  </div>
+</div>

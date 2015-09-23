@@ -14,7 +14,7 @@
               <div class='well'>Status: <b>{{json['deviceInfo']['status']}}</b></div>
             </div>
           </div>
-          <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints'] track by spiceName" crouton="name" spice="json['spices'][spiceName]" json="spiceJson"></crouton-data-display-loader>
+          <crouton-data-display-loader uitype="{{spiceJson['ui-type']}}" ng-repeat="(spiceName, spiceJson) in json['deviceInfo']['endPoints'] track by spiceName" crouton="name" spice="json['spices'][spiceName]" json="spiceJson" spice-name="spiceName"></crouton-data-display-loader>
         </tab>
       </tabset>
     </accordion-group>

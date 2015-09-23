@@ -1,6 +1,6 @@
 <div class="col-md-4">
   <div class="well simple-text">
-    <h3>{{spiceValues.value | noValue}}{{spiceInfo.units}}</h3>
+    <h3 ng-repeat="value in spiceValues">{{value | noValue}}{{spiceInfo.units}}</h3>
     <h6 tooltip="{{spiceInfo.description}}" tooltip-placement="bottom">{{spiceInfo.title}}</h6>
   </div>
 </div>

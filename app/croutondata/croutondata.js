@@ -26,16 +26,24 @@ app.service("croutonData", function($rootScope){
     }
   }
   //Updates new value from crouton
-  this.updateDeviceValue = function(name,spice,value){
-    onlineDevices[name]['spices'][spice]['value'] = value;
+  this.updateDeviceValue = function(name,spice,messageObj){
+    for(var valueOption in messageObj){
+      onlineDevices[name]['spices'][spice][valueOption] = messageObj[valueOption];
+    }
   }
   //Adds property spices that holds the current values of the spices
   var configureOnlineDevices = function(name){
     //configure locations to keep updated values of each endpoint
     onlineDevices[name]['spices'] = {}
     for(var spice in onlineDevices[name]['deviceInfo']['endPoints']){
+      //grab each spice or endpoint
       onlineDevices[name]['spices'][spice] = {};
-      onlineDevices[name]['spices'][spice]['value'] = '';
+      var spiceValueArray = onlineDevices[name]['deviceInfo']['endPoints'][spice]["values"];
+      for(var valueOption in spiceValueArray){
+        //Configuring default values for each value in a spice
+        console.log(valueOption);
+        onlineDevices[name]['spices'][spice][valueOption] = onlineDevices[name]['deviceInfo']['endPoints'][spice]["values"][valueOption];
+      }
     }
   }
 })
