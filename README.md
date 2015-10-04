@@ -1,4 +1,4 @@
-# crouton-ui  (in development)
+# crouton-protoype  (not maintained, release of Crouton here: [https://github.com/edfungus/Crouton](https://github.com/edfungus/Crouton))
 
 You have built a great IOT device with the ESP8266 but don't have an easy way to interact with it? Read on!
 
