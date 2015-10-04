@@ -12,7 +12,7 @@ This is an interface that makes it easy to interact with your IOT ESP8266. You c
 
 ## Getting started
 
-1. Get Crouton UI by either cloning the repo locally and run `npm install` or using the version online at [http://crouton-ui.mybluemix.net](http://crouton-ui.mybluemix.net/) Connect to a MQTT server from Crouton UI.*
+1. Get Crouton UI by either cloning the repo locally and run `npm install` or using the version online at [crouton-prototype.mybluemix.net](crouton-prototype.mybluemix.net) Connect to a MQTT server from Crouton UI.*
 
 2. Next, connect your crouton to the same MQTT network.
 
